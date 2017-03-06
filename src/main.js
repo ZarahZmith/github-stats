@@ -19,7 +19,7 @@ let promise = fetch(
   }
 );
 
-promise.then(function handleUserResponse(response) {
+promise.then(function handleResponse(response) {
 
   // console.log('logs out status', response.status);
 
@@ -34,31 +34,45 @@ promise.then(function handleUserResponse(response) {
 });
 
 
-// let Promise = fetch(
-//   'https://api.github.com/users/' + userName + '/repos',
-//   {
-//     method: 'GET',
-//     headers: {
-//       Authorization: 'token ' + process.argv[3]
-//     }
-//   }
-// );
-//
-// starDataPromise.then(function handleStarResponse(starResponse) {
-//
-//   console.log(starResponse);
-//
-//   if (starResponse.status > 199 && starResponse.status < 300) {
-//     starResponse.json().then(function printStarData(starData) {
-//       console.log(starData);
-//
-//       starData.forEach(function retrivesStarCount(starCount) {
-//
-//       });
-//
-//     });
-//   } else {
-//     console.log('Uh oh! You did something wrong. Please try again.', starResponse.status);
-//   }
-//
-// });
+let promiseRepo = fetch(
+  'https://api.github.com/users/' + userName + '/repos',
+  {
+    method: 'GET',
+    headers: {
+      Authorization: 'token ' + process.argv[3]
+    }
+  }
+);
+
+promiseRepo.then(function handleResponse(response) {
+
+  if (response.status > 199 && response.status < 300) {
+    response.json().then(function printStarData(repoData) {
+      // console.log(repoData);
+
+      // hold onto the highest count and the name for that winner
+      let maxStarCount = {
+        name: 'default',
+        number: 0
+      };
+
+      repoData.forEach(function retrivesStarCount(repo) {
+        // console.log(repo.stargazers_count, repo.name);
+        if (repo.stargazers_count > maxStarCount.number) {
+          maxStarCount.name = repo.name;
+          maxStarCount.number = repo.stargazers_count;
+        }
+      });
+
+      // print the winner
+      console.log(maxStarCount.name);
+
+      // here you will know which one will will have the most
+      // fetch again
+
+    });
+  } else {
+    console.log('Uh oh! You did something wrong. Please try again.', response.status);
+  }
+
+});
