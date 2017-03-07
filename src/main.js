@@ -70,6 +70,26 @@ promiseRepo.then(function handleResponse(response) {
       // here you will know which one will will have the most
       // fetch again
 
+      let contributerPromise = fetch(
+        'https://api.github.com/repos/' + userName + '/' + maxStarCount.name  + '/contributors',
+        {
+          method: 'GET',
+          headers: {
+            Authorization: 'token ' + process.argv[3]
+          }
+        }
+      );
+
+      contributerPromise.then(function handleResponse(response) {
+        if (response.status > 199 && response.status < 300) {
+          response.json().then(function printContributorData(contributorData) {
+            console.log(contributorData);
+          });
+        } else {
+          console.log('Uh oh! You did something wrong. Please try again.', response.status);
+        }
+      });
+
     });
   } else {
     console.log('Uh oh! You did something wrong. Please try again.', response.status);
