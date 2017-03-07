@@ -28,12 +28,12 @@ promise.then(function handleResponse(response) {
       console.log(userData.name, userData.location);
     });
   } else {
-    console.log('Uh oh! You did something wrong. Please try again.', response.status);
+    console.log('Uh oh! Something went wrong. Please try again.', response.status);
   }
 
 });
 
-
+//-------------------------------------------------------------------------------
 let promiseRepo = fetch(
   'https://api.github.com/users/' + userName + '/repos',
   {
@@ -86,13 +86,13 @@ promiseRepo.then(function handleResponse(response) {
             console.log(contributorData);
           });
         } else {
-          console.log('Uh oh! You did something wrong. Please try again.', response.status);
+          console.log('Uh oh! Something went wrong. Please try again.', response.status);
         }
       });
 
     });
   } else {
-    console.log('Uh oh! You did something wrong. Please try again.', response.status);
+    console.log('Uh oh! Something went wrong. Please try again.', response.status);
   }
 
 });
