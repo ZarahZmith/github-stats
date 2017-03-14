@@ -83,7 +83,9 @@ promiseRepo.then(function handleResponse(response) {
       contributerPromise.then(function handleResponse(response) {
         if (response.status > 199 && response.status < 300) {
           response.json().then(function printContributorData(contributorData) {
-            console.log(contributorData);
+            contributorData.forEach(function printContibutorNumber(contributorNumber) {
+              console.log(contributorNumber.contributions);
+            });
           });
         } else {
           console.log('Uh oh! Something went wrong. Please try again.', response.status);
