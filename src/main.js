@@ -25,7 +25,8 @@ promise.then(function handleResponse(response) {
 
   if (response.status > 199 && response.status < 300) {
     response.json().then(function printUserData(userData) {
-      console.log(userData.name, userData.location);
+      console.log('User name :', userData.name);
+      console.log('User location :', userData.location);
     });
   } else {
     console.log('Uh oh! Something went wrong. Please try again.', response.status);
@@ -65,7 +66,7 @@ promiseRepo.then(function handleResponse(response) {
       });
 
       // print the winner
-      console.log(maxStarCount.name);
+      console.log('Repo user owns with the most stars :', maxStarCount.name);
 
       // here you will know which one will will have the most
       // fetch again
@@ -83,9 +84,7 @@ promiseRepo.then(function handleResponse(response) {
       contributerPromise.then(function handleResponse(response) {
         if (response.status > 199 && response.status < 300) {
           response.json().then(function printContributorData(contributorData) {
-            contributorData.forEach(function printContibutorNumber(contributorNumber) {
-              console.log(contributorNumber.contributions);
-            });
+            console.log(contributorData);
           });
         } else {
           console.log('Uh oh! Something went wrong. Please try again.', response.status);
